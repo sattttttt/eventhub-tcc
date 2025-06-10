@@ -1,0 +1,16 @@
+steps:
+  # Langkah 1: Install semua dependensi
+  - name: 'gcr.io/cloud-builders/npm'
+    args: ['install']
+
+  # Langkah 2: Build aplikasi React untuk produksi
+  - name: 'gcr.io/cloud-builders/npm'
+    args: ['run', 'build']
+    # Set environment variable untuk URL API backend Anda yang sudah benar
+    env:
+      - 'REACT_APP_API_URL=https://eventhub-1071529598982.us-central1.run.app/api' # <-- URL SUDAH DIPERBAIKI
+
+  # Langkah 3: Deploy ke App Engine
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: 'gcloud'
+    args: ['app', 'deploy', 'app.yaml', '--quiet']

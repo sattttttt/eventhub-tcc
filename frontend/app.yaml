@@ -1,0 +1,14 @@
+runtime: nodejs18
+
+handlers:
+  # Rute untuk menyajikan file-file statis lainnya (CSS, JS, gambar)
+  # Penting: Rute yang lebih spesifik harus ada di atas
+  - url: /(.*\.(json|ico|js|css|png|jpg|svg))$
+    static_files: build/\1
+    upload: build/(.*\.(json|ico|js|css|png|jpg|svg))$
+
+  # Rute fallback untuk semua path lainnya, agar routing di sisi client (React Router) berfungsi
+  # App Engine akan menyajikan index.html untuk setiap request yang tidak cocok di atas
+  - url: /.*
+    static_files: build/index.html
+    upload: build/index.html
