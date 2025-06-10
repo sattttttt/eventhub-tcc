@@ -1,6 +1,6 @@
 substitutions:
   _ENV: gs://h-03-451207.appspot.com/eventhub/.env
-  _GSA: gs://h-03-451207.appspot.com/eventhub/.gcs-credentials.json
+  _GSA: gs://h-03-451207.appspot.com/eventhub/gcs-credentials.json
 
 steps:
   # Step 1: Ambil file .env
@@ -9,7 +9,7 @@ steps:
 
   # Step 2: Ambil file firebase credentials
   - name: "gcr.io/cloud-builders/gsutil"
-    args: ["cp", "${_GSA}", "backend/gcs-key.json"]
+    args: ["cp", "${_GSA}", "backend/gcs-credentials.json"]
 
   # Opsional: cek isi .env
   - name: 'ubuntu'
