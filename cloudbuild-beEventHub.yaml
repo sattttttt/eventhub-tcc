@@ -29,7 +29,7 @@ steps:
   - name: "gcr.io/cloud-builders/gcloud"
     args:
       [
-        "run", "deploy", "recipe",
+        "run", "deploy", "eventhub",
         "--image", "gcr.io/$PROJECT_ID/eventhub",
         "--timeout", "1000s",
         "--region", "us-central1",
