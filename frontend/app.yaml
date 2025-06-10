@@ -1,4 +1,4 @@
-runtime: nodejs18
+runtime: nodejs22
 
 handlers:
   # Rute untuk menyajikan file statis seperti CSS, JS, gambar, dll.
