@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // Buat instance axios dengan baseURL dari backend kita
 const api = axios.create({
-  baseURL: 'http://localhost:5000/api',
+  baseURL: 'https://eventhub-1071529598982.us-central1.run.app/api',
 });
 
 // Ini bagian yang sangat berguna: Axios Interceptor
