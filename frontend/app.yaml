@@ -1,14 +1,15 @@
-runtime: nodejs22
+runtime: nodejs18
 
 handlers:
-  # Rute untuk menyajikan file-file statis lainnya (CSS, JS, gambar)
-  # Penting: Rute yang lebih spesifik harus ada di atas
+  # Rute untuk menyajikan file statis seperti CSS, JS, gambar, dll.
+  # Mencari file di dalam folder 'dist'.
   - url: /(.*\.(json|ico|js|css|png|jpg|svg))$
-    static_files: build/\1
-    upload: build/(.*\.(json|ico|js|css|png|jpg|svg))$
+    static_files: dist/\1      # <-- DIUBAH DARI 'build'
+    upload: dist/(.*\.(json|ico|js|css|png|jpg|svg))$ # <-- DIUBAH DARI 'build'
 
-  # Rute fallback untuk semua path lainnya, agar routing di sisi client (React Router) berfungsi
-  # App Engine akan menyajikan index.html untuk setiap request yang tidak cocok di atas
+  # Rute fallback untuk semua path lainnya (PENTING untuk React Router)
+  # App Engine akan menyajikan file index.html utama untuk setiap request
+  # yang tidak cocok di atas, agar React bisa mengambil alih routing.
   - url: /.*
-    static_files: build/index.html
-    upload: build/index.html
+    static_files: dist/index.html # <-- DIUBAH DARI 'build'
+    upload: dist/index.html     # <-- DIUBAH DARI 'build'
