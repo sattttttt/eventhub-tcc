@@ -365,3 +365,51 @@ body.dark .skeleton::after {
   width: 90%;
   margin-bottom: 0.5rem;
 }
+
+/* --- ATURAN CSS UNTUK TAMPILAN MOBILE --- */
+/* Aturan di dalam blok ini hanya aktif jika lebar layar 768px atau kurang */
+@media (max-width: 768px) {
+
+  /* Perkecil padding utama agar konten tidak terlalu mepet ke samping */
+  main {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    padding: 0 0.75rem;
+  }
+
+  /* Ubah navbar dari horizontal menjadi vertikal */
+  .navbar {
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+  }
+
+  /* Buat daftar event menjadi 1 kolom lurus ke bawah */
+  .event-list {
+    grid-template-columns: 1fr;
+  }
+
+  /* Perkecil padding pada form dan halaman detail */
+  .form-container,
+  .event-detail {
+    padding: 1.5rem;
+  }
+
+  /* Perkecil sedikit ukuran judul utama */
+  h1 {
+    font-size: 1.8rem;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+  }
+}
+
+/* Sedikit penyesuaian untuk layar yang sangat kecil */
+@media (max-width: 480px) {
+    .nav-links {
+        flex-direction: column;
+        gap: 0.5rem;
+        align-items: center;
+    }
+}

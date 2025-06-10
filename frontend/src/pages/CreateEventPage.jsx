@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../services/api';
-import toast from 'react-hot-toast'; // Impor toast
+import toast from 'react-hot-toast'; // untuk notifikasi toast
 
 const CreateEventPage = () => {
   const [namaAcara, setNamaAcara] = useState('');
@@ -15,7 +15,7 @@ const CreateEventPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!poster) {
-      toast.error('Gambar poster wajib di-upload.'); // <-- Ganti setError
+      toast.error('Gambar poster wajib di-upload.'); 
       return;
     }
     setLoading(true);
@@ -33,10 +33,10 @@ const CreateEventPage = () => {
           'Content-Type': 'multipart/form-data',
         },
       });
-      toast.success('Event berhasil dibuat!'); // <-- Ganti alert
+      toast.success('Event berhasil dibuat!'); 
       navigate('/');
     } catch (err) {
-      toast.error(err.response?.data?.message || 'Gagal membuat event.'); // <-- Ganti setError
+      toast.error(err.response?.data?.message || 'Gagal membuat event.'); 
       console.error(err);
     } finally {
       setLoading(false);
