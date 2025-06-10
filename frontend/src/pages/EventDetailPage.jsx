@@ -8,9 +8,8 @@ import toast from 'react-hot-toast';
 const EventDetailPage = () => {
   const [event, setEvent] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [pageError, setPageError] = useState(''); // Error untuk memuat halaman
+  const [pageError, setPageError] = useState('');
   
-  // State untuk melacak status registrasi dan proses submit
   const [isRegistered, setIsRegistered] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -19,16 +18,30 @@ const EventDetailPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // Fungsi untuk memeriksa apakah user sudah terdaftar di event ini
+  // Fungsi untuk membuat URL Google Calendar
+  const getGoogleCalendarUrl = (event) => {
+    const startTime = new Date(event.tanggal_acara).toISOString().replace(/-|:|\.\d\d\d/g, "");
+    // Asumsikan durasi event adalah 2 jam untuk sederhana
+    const endTime = new Date(new Date(event.tanggal_acara).getTime() + (2 * 60 * 60 * 1000)).toISOString().replace(/-|:|\.\d\d\d/g, "");
+    
+    const url = new URL('https://www.google.com/calendar/render');
+    url.searchParams.append('action', 'TEMPLATE');
+    url.searchParams.append('text', event.nama_acara);
+    url.searchParams.append('dates', `${startTime}/${endTime}`);
+    url.searchParams.append('details', event.deskripsi);
+    url.searchParams.append('location', event.lokasi);
+    
+    return url.toString();
+  };
+
+  // Fungsi untuk memeriksa status registrasi user
   const checkRegistrationStatus = useCallback(async () => {
     if (!user) {
       setIsRegistered(false);
       return;
     }
-
     try {
       const response = await api.get('/users/me/events');
-      // Cek apakah ID event saat ini ada di dalam array event yang diikuti user
       const userIsRegistered = response.data.some(regEvent => regEvent.id === parseInt(id));
       setIsRegistered(userIsRegistered);
     } catch (err) {
@@ -53,7 +66,7 @@ const EventDetailPage = () => {
     fetchEvent();
   }, [id]);
 
-  // useEffect lain yang berjalan setelah data event atau status login user berubah
+  // useEffect lain untuk memeriksa status registrasi
   useEffect(() => {
     if (event) {
         checkRegistrationStatus();
@@ -65,14 +78,14 @@ const EventDetailPage = () => {
   const handleRegister = async () => {
     if (!user) {
         toast.error('Anda harus login untuk mendaftar.');
-        navigate('/login', { state: { from: location } }); // Simpan lokasi agar bisa kembali
+        navigate('/login', { state: { from: location } });
         return;
     }
     setIsSubmitting(true);
     try {
         await api.post(`/events/${id}/register`);
         toast.success('Berhasil mendaftar ke event!');
-        setIsRegistered(true); // Langsung update UI
+        setIsRegistered(true);
     } catch (err) {
         toast.error(err.response?.data?.message || 'Gagal mendaftar.');
     } finally {
@@ -86,7 +99,7 @@ const EventDetailPage = () => {
     try {
         await api.delete(`/events/${id}/register`);
         toast.success('Pendaftaran Anda berhasil dibatalkan.');
-        setIsRegistered(false); // Langsung update UI
+        setIsRegistered(false);
     } catch (err) {
         toast.error(err.response?.data?.message || 'Gagal membatalkan pendaftaran.');
     } finally {
@@ -120,23 +133,30 @@ const EventDetailPage = () => {
       <p><strong>Penyelenggara:</strong> {event.organizer.nama}</p>
       <p><strong>Lokasi:</strong> {event.lokasi}</p>
       <p><strong>Tanggal:</strong> {new Date(event.tanggal_acara).toLocaleString('id-ID', { dateStyle: 'full', timeStyle: 'short' })}</p>
+      
+      <div style={{ marginTop: '1rem' }}>
+        <a 
+          href={getGoogleCalendarUrl(event)} 
+          target="_blank" 
+          rel="noopener noreferrer" 
+          className="button-secondary"
+        >
+          + Tambahkan ke Google Calendar
+        </a>
+      </div>
+
       <hr/>
       <h3>Deskripsi</h3>
       <p style={{ whiteSpace: 'pre-wrap' }}>{event.deskripsi}</p>
       <hr/>
       
-      {/* --- Bagian Tombol Aksi Dinamis --- */}
-
-      {/* Jika user adalah pemilik event */}
-      {isOwner && (
+      {/* Bagian Tombol Aksi Dinamis */}
+      {isOwner ? (
         <div className="owner-actions">
           <Link to={`/event/${id}/edit`} className="button-secondary">Edit Event</Link>
           <button className="button-danger" onClick={handleDelete}>Delete Event</button>
         </div>
-      )}
-
-      {/* Jika user BUKAN pemilik event */}
-      {!isOwner && (
+      ) : (
         isRegistered ? (
           <button className="button-danger" onClick={handleCancelRegistration} disabled={isSubmitting}>
             {isSubmitting ? 'Memproses...' : 'Batalkan Pendaftaran'}
