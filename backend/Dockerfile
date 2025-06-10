@@ -1,17 +1,7 @@
-# Gunakan base image Node.js versi 18 yang ramping
-FROM node:18-slim
-
-# Tetapkan direktori kerja di dalam kontainer
-WORKDIR /usr/src/app
-
-# Salin package.json dan package-lock.json terlebih dahulu untuk caching
-COPY package*.json ./
-
-# Install semua dependensi produksi
-RUN npm install --only=production
-
-# Salin sisa kode aplikasi ke dalam direktori kerja
+FROM node:20-alpine
+WORKDIR /app
 COPY . .
-
-# Beri tahu kontainer cara menjalankan aplikasi saat dimulai
-CMD [ "node", "server.js" ]
+RUN npm install
+EXPOSE 3000
+CMD ["node", "server.js"]
+# 
