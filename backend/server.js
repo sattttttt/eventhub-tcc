@@ -28,7 +28,9 @@ app.listen(PORT, async () => {
     // Hati-hati dengan { force: true } karena akan menghapus dan membuat ulang tabel
     await db.sync(); 
     console.log('🔄 All models were synchronized successfully.');
-
+app.get('/', (req, res) => {
+    res.send('Welcome to the Event Management API');
+  },)
     console.log(`🚀 Server is running on http://localhost:${PORT}`);
   } catch (error) {
     console.error('❌ Unable to connect to the database or sync models:', error);
