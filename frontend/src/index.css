@@ -1,0 +1,367 @@
+/* Definisikan variabel warna untuk tema terang (default) */
+:root {
+  --bg-color: #f4f7f6;
+  --text-color: #333;
+  --card-bg: #ffffff;
+  --navbar-bg: #ffffff;
+  --primary-color: #5a67d8;
+  --primary-hover: #434190;
+  --secondary-text: #718096;
+  --border-color: #e2e8f0;
+  --shadow-color: rgba(0,0,0,0.1);
+}
+
+/* Definisikan ulang variabel warna saat tema gelap aktif */
+body.dark {
+  --bg-color: #1a202c;
+  --text-color: #e2e8f0;
+  --card-bg: #2d3748;
+  --navbar-bg: #2d3748;
+  --primary-color: #7f9cf5;
+  --primary-hover: #667eea;
+  --secondary-text: #a0aec0;
+  --border-color: #4a5568;
+  --shadow-color: rgba(0,0,0,0.4);
+}
+
+/* Reset CSS dasar */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: background-color 0.3s, color 0.3s;
+}
+
+/* ... (sisa kode CSS Anda dari sebelumnya, tetapi ganti warna dengan var()) ... */
+
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+main {
+  flex-grow: 1;
+  max-width: 1100px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+  width: 100%;
+}
+
+/* Navbar Styling */
+.navbar {
+  background: var(--navbar-bg);
+  padding: 1rem 2rem;
+  box-shadow: 0 2px 4px var(--shadow-color);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.nav-brand {
+  font-weight: bold;
+  font-size: 1.5rem;
+  color: var(--primary-color);
+  text-decoration: none;
+}
+
+.nav-links {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+.nav-links a, .nav-links button {
+  color: var(--secondary-text);
+  text-decoration: none;
+  font-weight: 500;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: color 0.2s ease-in-out;
+  padding: 0.5rem;
+}
+
+.nav-links a:hover, .nav-links button:hover {
+  color: var(--primary-color);
+}
+
+/* Card Styling */
+.event-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.event-card {
+  background: var(--card-bg);
+  border-radius: 8px;
+  box-shadow: 0 4px 6px var(--shadow-color);
+  overflow: hidden;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  color: inherit;
+  border: 1px solid var(--border-color);
+}
+
+.event-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 15px var(--shadow-color);
+}
+
+.event-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.event-card-content {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.event-card-content h3 {
+  margin-bottom: 0.5rem;
+  font-size: 1.25rem;
+  color: var(--text-color);
+}
+
+.event-card-content p {
+  margin-bottom: 0.25rem;
+  color: var(--secondary-text);
+  font-size: 0.9rem;
+  flex-grow: 1;
+}
+
+/* Form Styling */
+.form-container {
+  max-width: 500px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: var(--card-bg);
+  border-radius: 8px;
+  box-shadow: 0 4px 6px var(--shadow-color);
+  border: 1px solid var(--border-color);
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: var(--secondary-text);
+}
+
+.form-group input, .form-group textarea {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid var(--border-color);
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.form-group input:focus, .form-group textarea:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px var(--primary-hover);
+}
+
+/* Button Styling */
+.button, .button-primary, .button-secondary, .button-danger {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-weight: bold;
+  text-align: center;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color 0.2s ease-in-out, transform 0.1s ease;
+}
+
+.button:active, .button-primary:active, .button-secondary:active, .button-danger:active {
+    transform: scale(0.98);
+}
+
+.button-primary {
+  background-color: var(--primary-color);
+  color: white;
+}
+.button-primary:hover {
+  background-color: var(--primary-hover);
+}
+.button-primary[disabled] {
+    background-color: #a3aed2;
+    cursor: not-allowed;
+}
+
+/* ... sisa button styling ... */
+.button-secondary {
+  background-color: #718096;
+  color: white;
+}
+.button-secondary:hover {
+  background-color: #4a5568;
+}
+
+.button-danger {
+  background-color: #e53e3e;
+  color: white;
+}
+.button-danger:hover {
+  background-color: #c53030;
+}
+
+/* Utility & Other Styles */
+.error-message {
+  color: #c53030;
+  background-color: #fed7d7;
+  border: 1px solid #f56565;
+  padding: 0.75rem;
+  border-radius: 4px;
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+body.dark .error-message {
+    background-color: #443333;
+    border-color: #c53030;
+    color: #fed7d7;
+}
+
+.form-footer {
+  text-align: center;
+  margin-top: 1.5rem;
+  font-size: 0.9rem;
+}
+
+.owner-actions {
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border-color);
+  display: flex;
+  gap: 1rem;
+}
+.form-footer a {
+  color: var(--primary-color);
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.form-footer a:hover {
+  text-decoration: underline;
+  text-decoration-thickness: 1.5px;
+}
+
+.event-detail {
+  background: var(--card-bg);
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px var(--shadow-color);
+  border: 1px solid var(--border-color);
+}
+
+.event-detail h1 {
+  margin-top: 1.5rem;
+  color: var(--text-color);
+}
+
+.event-detail p {
+  color: var(--secondary-text);
+  line-height: 1.6;
+}
+
+.event-detail p strong {
+    color: var(--text-color);
+    font-weight: 600;
+}
+
+.event-detail hr {
+    margin: 1.5rem 0;
+    border: none;
+    border-top: 1px solid var(--border-color);
+}
+/* Animasi untuk efek kilau (shimmer) */
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* Kelas dasar untuk setiap elemen skeleton */
+.skeleton {
+  background-color: var(--border-color); /* Warna dasar abu-abu */
+  position: relative;
+  overflow: hidden;
+  border-radius: 4px;
+}
+
+/* Pseudo-elemen untuk membuat efek kilau yang bergerak */
+.skeleton::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  transform: translateX(-100%);
+  background-image: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0,
+    rgba(255, 255, 255, 0.2) 20%,
+    rgba(255, 255, 255, 0.5) 60%,
+    rgba(255, 255, 255, 0)
+  );
+  animation: shimmer 2s infinite;
+}
+
+body.dark .skeleton::after {
+    background-image: linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 0) 0,
+    rgba(0, 0, 0, 0.2) 20%,
+    rgba(0, 0, 0, 0.4) 60%,
+    rgba(0, 0, 0, 0)
+  );
+}
+
+
+/* Ukuran spesifik untuk setiap bagian skeleton card */
+.skeleton-image {
+  width: 100%;
+  height: 200px; /* Sama dengan tinggi gambar di EventCard */
+}
+
+.skeleton-title {
+  height: 1.25rem; /* Sama dengan tinggi h3 */
+  width: 60%;
+  margin-bottom: 0.75rem;
+}
+
+.skeleton-text {
+  height: 0.9rem; /* Sama dengan tinggi p */
+  width: 90%;
+  margin-bottom: 0.5rem;
+}
