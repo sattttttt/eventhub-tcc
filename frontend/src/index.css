@@ -413,3 +413,33 @@ body.dark .skeleton::after {
         align-items: center;
     }
 }
+/* --- KODE BARU UNTUK CATEGORY PILLS --- */
+
+.category-pills-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.category-pill {
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--border-color);
+  border-radius: 9999px; /* Membuatnya berbentuk pil */
+  cursor: pointer;
+  user-select: none; /* Mencegah teks terseleksi saat diklik */
+  transition: all 0.2s ease-in-out;
+  font-weight: 500;
+  background-color: var(--bg-color);
+  color: var(--secondary-text);
+}
+
+.category-pill:hover {
+  border-color: var(--primary-color);
+}
+
+/* Style untuk pil yang sedang dipilih (selected) */
+.category-pill.selected {
+  background-color: var(--primary-color);
+  color: white;
+  border-color: var(--primary-color);
+}

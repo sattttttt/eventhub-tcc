@@ -4,21 +4,18 @@ import api from '../services/api';
 import toast from 'react-hot-toast';
 
 const CreateEventPage = () => {
-  // State untuk form
   const [namaAcara, setNamaAcara] = useState('');
   const [deskripsi, setDeskripsi] = useState('');
   const [tanggalAcara, setTanggalAcara] = useState('');
   const [lokasi, setLokasi] = useState('');
   const [poster, setPoster] = useState(null);
   
-  // --- STATE BARU UNTUK KATEGORI ---
   const [allCategories, setAllCategories] = useState([]);
   const [selectedCategories, setSelectedCategories] = useState([]);
 
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  // useEffect untuk mengambil daftar kategori dari API
   useEffect(() => {
     const fetchCategories = async () => {
       try {
@@ -32,12 +29,12 @@ const CreateEventPage = () => {
     fetchCategories();
   }, []);
 
-  // Handler untuk mengubah pilihan kategori
+  // Logika ini tidak perlu diubah sama sekali
   const handleCategoryChange = (categoryId) => {
     setSelectedCategories(prev => 
       prev.includes(categoryId)
-        ? prev.filter(id => id !== categoryId) // Jika sudah ada, hapus (uncheck)
-        : [...prev, categoryId] // Jika belum ada, tambahkan (check)
+        ? prev.filter(id => id !== categoryId)
+        : [...prev, categoryId]
     );
   };
 
@@ -55,7 +52,6 @@ const CreateEventPage = () => {
     formData.append('tanggal_acara', new Date(tanggalAcara).toISOString());
     formData.append('lokasi', lokasi);
     formData.append('poster', poster);
-    // Tambahkan array ID kategori yang dipilih ke form data
     formData.append('categories', JSON.stringify(selectedCategories));
 
     try {
@@ -75,7 +71,6 @@ const CreateEventPage = () => {
     <div className="form-container">
       <h2>Buat Event Baru Anda</h2>
       <form onSubmit={handleSubmit}>
-        {/* ... (form field lain tidak berubah) ... */}
         <div className="form-group">
           <label>Nama Acara</label>
           <input type="text" value={namaAcara} onChange={(e) => setNamaAcara(e.target.value)} required />
@@ -85,20 +80,17 @@ const CreateEventPage = () => {
           <textarea rows="5" value={deskripsi} onChange={(e) => setDeskripsi(e.target.value)} required />
         </div>
         
-        {/* --- BAGIAN BARU: CHECKBOX KATEGORI --- */}
+        {/* --- PERUBAHAN TAMPILAN DI SINI --- */}
         <div className="form-group">
             <label>Kategori (bisa pilih lebih dari satu)</label>
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
+            <div className="category-pills-container">
                 {allCategories.map(cat => (
-                    <div key={cat.id}>
-                        <input 
-                            type="checkbox"
-                            id={`cat-${cat.id}`}
-                            value={cat.id}
-                            checked={selectedCategories.includes(cat.id)}
-                            onChange={() => handleCategoryChange(cat.id)}
-                        />
-                        <label htmlFor={`cat-${cat.id}`} style={{ marginLeft: '5px', fontWeight: 'normal' }}>{cat.name}</label>
+                    <div
+                        key={cat.id}
+                        className={`category-pill ${selectedCategories.includes(cat.id) ? 'selected' : ''}`}
+                        onClick={() => handleCategoryChange(cat.id)}
+                    >
+                        {cat.name}
                     </div>
                 ))}
             </div>
